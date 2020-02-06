@@ -88,6 +88,13 @@ namespace SnackMachine.Logic
             );
         }
 
+        public override string ToString()
+        {
+            if (Amount < 1)
+                return "¢" + (Amount * 100).ToString("0");
+            return "$" + Amount.ToString("0.00");
+        }
+
         #endregion
 
         #region Protected Methods

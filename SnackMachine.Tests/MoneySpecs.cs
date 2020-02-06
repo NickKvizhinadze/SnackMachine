@@ -127,5 +127,30 @@ namespace SnackMachine.Tests
 
             action.Should().Throw<InvalidOperationException>();
         }
+
+        [Theory]
+        [InlineData(1, 0, 0, 0, 0, 0, "¢1")]
+        [InlineData(0, 0, 0, 1, 0, 0, "$1.00")]
+        [InlineData(1, 0, 0, 1, 0, 0, "$1.01")]
+        [InlineData(0, 0, 2, 1, 0, 0, "$1.50")]
+        public void To_string_should_return_amount_of_money(
+           int oneCentCount,
+           int tenCentCount,
+           int quarterCount,
+           int oneDollarCount,
+           int fiveDollarCount,
+           int twentyDollarCount,
+           string expectedString)
+        {
+            var money = new Money(
+                oneCentCount,
+                tenCentCount,
+                quarterCount,
+                oneDollarCount,
+                fiveDollarCount,
+                twentyDollarCount);
+
+            money.ToString().Should().Be(expectedString);
+        }
     }
 }
