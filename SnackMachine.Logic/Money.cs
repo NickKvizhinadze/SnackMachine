@@ -4,6 +4,16 @@ namespace SnackMachine.Logic
 {
     public class Money : ValueObject<Money>
     {
+        #region Static Properties
+        public static Money None => new Money(0, 0, 0, 0, 0, 0);
+        public static Money Cent => new Money(1, 0, 0, 0, 0, 0);
+        public static Money TenCent => new Money(0, 1, 0, 0, 0, 0);
+        public static Money Quarter => new Money(0, 0, 1, 0, 0, 0);
+        public static Money Dollar => new Money(0, 0, 0, 1, 0, 0);
+        public static Money FiveDollar => new Money(0, 0, 0, 0, 1, 0);
+        public static Money TwentyDollar => new Money(0, 0, 0, 0, 0, 1);
+        #endregion
+
         #region Constructor
 
         public Money(
