@@ -45,6 +45,7 @@
     <Compile Include="Money.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SnackMachine.cs" />
+    <Compile Include="ValueObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

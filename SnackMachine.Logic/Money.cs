@@ -1,6 +1,6 @@
 ﻿namespace SnackMachine.Logic
 {
-    public class Money
+    public class Money : ValueObject<Money>
     {
         #region Constructor
 
@@ -23,6 +23,7 @@
         public int OneDollarCount { get; private set; }
         public int FiveDollarCount { get; private set; }
         public int TwentyDollarCount { get; private set; }
+
         #endregion
 
         #region Methods
@@ -37,6 +38,34 @@
                 money1.FiveDollarCount += money2.FiveDollarCount,
                 money1.TwentyDollarCount += money2.TwentyDollarCount
             );
+        }
+
+        #endregion
+
+        #region Protected Methods
+
+        protected override bool EqualsCore(Money other)
+        {
+            return OneCentCount == other.OneCentCount
+                && TenCentCount == other.TenCentCount
+                && QuarterCount == other.QuarterCount
+                && OneDollarCount == other.OneDollarCount
+                && FiveDollarCount == other.FiveDollarCount
+                && TwentyDollarCount == other.TwentyDollarCount;
+        }
+
+        protected override int GetHashCodeCore()
+        {
+            unchecked
+            {
+                int hashCode = OneCentCount;
+                hashCode = (hashCode * 397) ^ TenCentCount;
+                hashCode = (hashCode * 397) ^ QuarterCount;
+                hashCode = (hashCode * 397) ^ OneDollarCount;
+                hashCode = (hashCode * 397) ^ FiveDollarCount;
+                hashCode = (hashCode * 397) ^ TwentyDollarCount;
+                return hashCode;
+            }
         }
 
         #endregion
