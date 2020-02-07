@@ -16,13 +16,17 @@ namespace SnackMachine.Logic
 
         #region Constructor
 
+        public Money()
+        {
+        }
+
         public Money(
             int oneCentCount,
             int tenCentCount,
             int quarterCount,
             int oneDollarCount,
             int fiveDollarCount,
-            int twentyDollarCount)
+            int twentyDollarCount) : this()
         {
             if (oneCentCount < 0)
                 throw new InvalidOperationException();

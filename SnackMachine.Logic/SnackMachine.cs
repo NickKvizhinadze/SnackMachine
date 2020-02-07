@@ -4,18 +4,18 @@ using static SnackMachine.Logic.Money;
 
 namespace SnackMachine.Logic
 {
-    public sealed class SnackMachine : Entity
+    public class SnackMachine : Entity
     {
         #region Properties
 
-        public Money MoneyInside { get; set; } = None;
-        public Money MoneyInTransaction { get; set; } = None;
+        public virtual Money MoneyInside { get; protected set; } = None;
+        public virtual Money MoneyInTransaction { get; protected set; } = None;
 
         #endregion
 
         #region Methods
 
-        public void InsertMoney(Money money)
+        public virtual void InsertMoney(Money money)
         {
             Money[] coinsAndNotes = { Cent, TenCent, Quarter, Dollar, FiveDollar, TwentyDollar };
             if (!coinsAndNotes.Contains(money))
@@ -24,12 +24,12 @@ namespace SnackMachine.Logic
             MoneyInTransaction += money;
         }
 
-        public void ReturnMonay()
+        public virtual void ReturnMonay()
         {
             MoneyInTransaction = None;
         }
 
-        public void BuySnack()
+        public virtual void BuySnack()
         {
             MoneyInside += MoneyInTransaction;
             MoneyInTransaction = None;

@@ -1,16 +1,11 @@
-﻿using FluentNHibernate.Cfg;
+﻿using System.Reflection;
+using NHibernate;
+using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions;
-using FluentNHibernate.Conventions.AcceptanceCriteria;
 using FluentNHibernate.Conventions.Helpers;
 using FluentNHibernate.Conventions.Instances;
-using NHibernate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using FluentNHibernate.Conventions.AcceptanceCriteria;
 
 namespace SnackMachine.Logic
 {
@@ -21,7 +16,7 @@ namespace SnackMachine.Logic
         #endregion
 
         #region Methods
-        internal static ISession OpenSession()
+        public static ISession OpenSession()
         {
             return _factory.OpenSession();
         }

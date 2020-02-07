@@ -1,9 +1,15 @@
-﻿namespace SnackMachine.Logic
+﻿using System;
+using NHibernate.Proxy;
+
+namespace SnackMachine.Logic
 {
     public abstract class Entity
     {
-        public long Id { get; private set; }
+        #region Properties
+        public virtual long Id { get; protected set; }
+        #endregion
 
+        #region Methods
         public override bool Equals(object obj)
         {
             if (!(obj is Entity other))
@@ -12,7 +18,7 @@
             if (ReferenceEquals(this, other))
                 return true;
 
-            if (GetType() != other.GetType())
+            if (GetRealType() != other.GetRealType())
                 return false;
 
             if (Id == 0 || other.Id == 0)
@@ -39,7 +45,17 @@
 
         public override int GetHashCode()
         {
-            return (GetType().ToString() + Id).GetHashCode();
+            return (GetRealType().ToString() + Id).GetHashCode();
         }
+        #endregion
+
+        #region Private Metods
+
+        private Type GetRealType()
+        {
+            return NHibernateProxyHelper.GetClassWithoutInitializingProxy(this);
+        }
+
+        #endregion
     }
 }
