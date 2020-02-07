@@ -1,4 +1,5 @@
-﻿using SnackMachine.Logic;
+﻿using NHibernate;
+using SnackMachine.Logic;
 using SnackMachine.UI.Common;
 
 namespace SnackMachine.UI
@@ -76,6 +77,12 @@ namespace SnackMachine.UI
         private void BuySnack()
         {
             _snackMachine.BuySnack();
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                session.SaveOrUpdate(_snackMachine);
+                transaction.Commit();
+            }
             NotifyClient("You have bought a snack");
         }
 
