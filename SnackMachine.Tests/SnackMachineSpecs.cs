@@ -2,6 +2,7 @@
 using Xunit;
 using FluentAssertions;
 using static SnackMachine.Logic.Money;
+using System.Linq;
 
 namespace SnackMachine.Tests
 {
@@ -42,16 +43,18 @@ namespace SnackMachine.Tests
         }
 
         [Fact]
-        public void Money_in_transaction_goes_to_money_inside_after_purchase()
+        public void BuySnack_trades_inserted_money_for_a_snack()
         {
             var snackMachine = new Logic.SnackMachine();
+            snackMachine.LoadSnacks(1, new Logic.Snack("Some snack"), 10, 1m);
             snackMachine.InsertMoney(Dollar);
             snackMachine.InsertMoney(Dollar);
 
-            snackMachine.BuySnack();
+            snackMachine.BuySnack(1);
 
             snackMachine.MoneyInTransaction.Amount.Should().Be(0);
             snackMachine.MoneyInside.Amount.Should().Be(2m);
+            snackMachine.Slots.Single(s => s.Position == 1).Quantity.Should().Be(9);
         }
     }
 }
