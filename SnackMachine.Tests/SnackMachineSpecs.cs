@@ -57,5 +57,28 @@ namespace SnackMachine.Tests
             snackMachine.MoneyInside.Amount.Should().Be(2m);
             snackMachine.GetSnackPile(1).Quantity.Should().Be(9);
         }
+
+        [Fact]
+        public void Cannot_make_purchase_when_there_is_no_snacks()
+        {
+            var snackMachine = new Logic.SnackMachine();
+            snackMachine.InsertMoney(Dollar);
+
+            Action action = () => snackMachine.BuySnack(1);
+
+            action.Should().Throw<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void Cannot_make_purchase_if_not_enought_money_inserted()
+        {
+            var snackMachine = new Logic.SnackMachine();
+            snackMachine.LoadSnacks(1, new SnackPile(new Snack("Some snack"), 2m, 10));
+            snackMachine.InsertMoney(Dollar);
+
+            Action action = () => snackMachine.BuySnack(1);
+
+            action.Should().Throw<InvalidOperationException>();
+        }
     }
 }
