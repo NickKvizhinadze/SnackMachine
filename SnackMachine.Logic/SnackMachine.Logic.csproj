@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AggregateRoot.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Initer.cs" />
     <Compile Include="Money.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Snack.cs" />
     <Compile Include="SnackMachine.cs" />
     <Compile Include="SnackMachineMap.cs" />
+    <Compile Include="SnackPile.cs" />
     <Compile Include="ValueObject.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿namespace SnackMachine.Logic
 {
-    public class Snack : Entity
+    public class Snack : AggregateRoot
     {
         #region Constructor
         protected Snack()

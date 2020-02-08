@@ -3,6 +3,7 @@ using Xunit;
 using FluentAssertions;
 using static SnackMachine.Logic.Money;
 using System.Linq;
+using SnackMachine.Logic;
 
 namespace SnackMachine.Tests
 {
@@ -46,7 +47,7 @@ namespace SnackMachine.Tests
         public void BuySnack_trades_inserted_money_for_a_snack()
         {
             var snackMachine = new Logic.SnackMachine();
-            snackMachine.LoadSnacks(1, new Logic.Snack("Some snack"), 10, 1m);
+            snackMachine.LoadSnacks(1, new SnackPile(new Snack("Some snack"), 1m, 10));
             snackMachine.InsertMoney(Dollar);
             snackMachine.InsertMoney(Dollar);
 
@@ -54,7 +55,7 @@ namespace SnackMachine.Tests
 
             snackMachine.MoneyInTransaction.Amount.Should().Be(0);
             snackMachine.MoneyInside.Amount.Should().Be(2m);
-            snackMachine.Slots.Single(s => s.Position == 1).Quantity.Should().Be(9);
+            snackMachine.GetSnackPile(1).Quantity.Should().Be(9);
         }
     }
 }
