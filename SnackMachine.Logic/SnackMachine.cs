@@ -12,7 +12,7 @@ namespace SnackMachine.Logic
         public SnackMachine()
         {
             MoneyInside = None;
-            MoneyInTransaction = None;
+            MoneyInTransaction = 0;
             Slots = new List<Slot>
                 {
                     new Slot(this, 1),
@@ -26,12 +26,22 @@ namespace SnackMachine.Logic
         #region Properties
 
         public virtual Money MoneyInside { get; protected set; }
-        public virtual Money MoneyInTransaction { get; protected set; }
+        public virtual decimal MoneyInTransaction { get; protected set; }
         protected IList<Slot> Slots { get; set; }
 
         #endregion
 
         #region Methods
+        public void LoadMoney(Money money)
+        {
+            MoneyInside += money;
+        }
+
+        public virtual void LoadSnacks(int position, SnackPile snackPile)
+        {
+            var slot = GetSlot(position);
+            slot.SnackPile = snackPile;
+        }
 
         public virtual void InsertMoney(Money money)
         {
@@ -39,30 +49,34 @@ namespace SnackMachine.Logic
             if (!coinsAndNotes.Contains(money))
                 throw new InvalidOperationException();
 
-            MoneyInTransaction += money;
+            MoneyInTransaction += money.Amount;
+            MoneyInside += money;
         }
 
         public virtual void ReturnMonay()
         {
-            MoneyInTransaction = None;
+            var allocatedMoney = MoneyInside.Allocate(MoneyInTransaction);
+
+            MoneyInTransaction = 0;
+            MoneyInside -= allocatedMoney;
         }
 
         public virtual void BuySnack(int position)
         {
             Slot slot = GetSlot(position);
-            if (slot.SnackPile.Price > MoneyInTransaction.Amount)
+            var snackPile = slot.SnackPile;
+
+            if (snackPile.Price > MoneyInTransaction)
                 throw new InvalidOperationException();
 
-            slot.SnackPile = slot.SnackPile.SubstractOne();
+            snackPile = snackPile.SubstractOne();
 
-            MoneyInside += MoneyInTransaction;
-            MoneyInTransaction = None;
-        }
+            var change = MoneyInside.Allocate(MoneyInTransaction - snackPile.Price);
 
-        public virtual void LoadSnacks(int position, SnackPile snackPile)
-        {
-            var slot = GetSlot(position);
-            slot.SnackPile = snackPile;
+            if (change.Amount < MoneyInTransaction - snackPile.Price)
+                throw new InvalidOperationException();
+            MoneyInside -= change;
+            MoneyInTransaction = 0; //TODO: insetd of this should Return Money
         }
 
         public virtual SnackPile GetSnackPile(int position)

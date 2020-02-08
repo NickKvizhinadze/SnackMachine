@@ -68,6 +68,34 @@ namespace SnackMachine.Logic
         #endregion
 
         #region Methods
+        public Money Allocate(decimal amount)
+        {
+            int twentyDollarCount = Math.Min((int)(amount / 20), TwentyDollarCount);
+            amount -= (twentyDollarCount * 20);
+
+            int fiveDollarCount = Math.Min((int)(amount / 5), FiveDollarCount);
+            amount -= fiveDollarCount * 5;
+
+            int oneDollarCount = Math.Min((int)amount, OneDollarCount);
+            amount -= oneDollarCount;
+
+            int quarterCount = Math.Min((int)(amount / 0.25m), QuarterCount);
+            amount -= quarterCount * 0.25m;
+
+            int tenCentCount = Math.Min((int)(amount / 0.1m), TenCentCount);
+            amount -= tenCentCount * 0.1m;
+
+            int oneCentCount = Math.Min((int)(amount / 0.01m), OneCentCount);
+
+            return new Money(
+                oneCentCount,
+                tenCentCount,
+                quarterCount,
+                oneDollarCount,
+                fiveDollarCount,
+                twentyDollarCount
+                );
+        }
 
         public static Money operator +(Money money1, Money money2)
         {
@@ -89,6 +117,23 @@ namespace SnackMachine.Logic
                 money1.OneDollarCount - money2.OneDollarCount,
                 money1.FiveDollarCount - money2.FiveDollarCount,
                 money1.TwentyDollarCount - money2.TwentyDollarCount
+            );
+        }
+        public static Money operator *(Money money1, int number)
+        {
+            if (number < 0)
+                throw new InvalidOperationException();
+
+            if (number == 0)
+                return None;
+
+            return new Money(
+                money1.OneCentCount * number,
+                money1.TenCentCount * number,
+                money1.QuarterCount * number,
+                money1.OneDollarCount * number,
+                money1.FiveDollarCount * number,
+                money1.TwentyDollarCount * number
             );
         }
 
