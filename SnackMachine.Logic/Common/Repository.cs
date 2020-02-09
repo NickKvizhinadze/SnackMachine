@@ -1,8 +1,10 @@
-﻿namespace SnackMachine.Logic
+﻿using SnackMachine.Logic.Utils;
+
+namespace SnackMachine.Logic.Common
 {
     public abstract class Repository<T> where T : AggregateRoot
     {
-        #region Methids
+        #region Methods
         public T GetById(long id)
         {
             using (var session = SessionFactory.OpenSession())

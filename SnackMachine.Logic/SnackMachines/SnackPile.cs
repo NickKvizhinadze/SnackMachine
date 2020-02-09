@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SnackMachine.Logic.Common;
 
-namespace SnackMachine.Logic
+namespace SnackMachine.Logic.SnackMachines
 {
     public class SnackPile : ValueObject<SnackPile>
     {

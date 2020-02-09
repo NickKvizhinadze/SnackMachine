@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using SnackMachine.Logic;
+using SnackMachine.Logic.Utils;
 
 namespace SnackMachine.UI
 {

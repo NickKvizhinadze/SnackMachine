@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using static SnackMachine.Logic.Money;
+using SnackMachine.Logic.Common;
+using SnackMachine.Logic.SharedKernel;
+using static SnackMachine.Logic.SharedKernel.Money;
 
-namespace SnackMachine.Logic
+namespace SnackMachine.Logic.SnackMachines
 {
     public class SnackMachine : AggregateRoot
     {

@@ -1,4 +1,4 @@
-﻿namespace SnackMachine.Logic
+﻿namespace SnackMachine.Logic.Utils
 {
     public static class Initer
     {

@@ -1,15 +1,16 @@
-﻿using NHibernate;
-using SnackMachine.Logic;
-using SnackMachine.UI.Common;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Linq;
+using SnackMachine.UI.Common;
+using SnackMachine.Logic.Common;
+using SnackMachine.Logic.SharedKernel;
+using SnackMachine.Logic.SnackMachines;
 
 namespace SnackMachine.UI
 {
     public class SnackMachineViewModel : ViewModel
     {
         #region Fields
-        private readonly Logic.SnackMachine _snackMachine;
+        private readonly Logic.SnackMachines.SnackMachine _snackMachine;
         private readonly SnackMachineRepository _repository;
 
         private string _message = "";
@@ -17,7 +18,7 @@ namespace SnackMachine.UI
 
         #region Constructor
 
-        public SnackMachineViewModel(Logic.SnackMachine snackMachine)
+        public SnackMachineViewModel(Logic.SnackMachines.SnackMachine snackMachine)
         {
             _snackMachine = snackMachine;
             _repository = new SnackMachineRepository();

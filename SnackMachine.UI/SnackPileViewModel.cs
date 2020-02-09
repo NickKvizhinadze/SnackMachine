@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media;
-using SnackMachine.Logic;
+using SnackMachine.Logic.SnackMachines;
 
 namespace SnackMachine.UI
 {

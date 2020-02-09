@@ -1,9 +1,10 @@
 ﻿using System;
 using Xunit;
 using FluentAssertions;
-using SnackMachine.Logic;
-using static SnackMachine.Logic.Money;
-using static SnackMachine.Logic.Snack;
+using SnackMachine.Logic.Common;
+using SnackMachine.Logic.SnackMachines;
+using static SnackMachine.Logic.SharedKernel.Money;
+using static SnackMachine.Logic.SnackMachines.Snack;
 
 namespace SnackMachine.Tests
 {
@@ -12,7 +13,7 @@ namespace SnackMachine.Tests
         [Fact]
         public void Return_money_empties_money_in_transaction()
         {
-            var snackMachine = new Logic.SnackMachine();
+            var snackMachine = new Logic.SnackMachines.SnackMachine();
             snackMachine.InsertMoney(Dollar);
 
             snackMachine.ReturnMonay();
@@ -23,7 +24,7 @@ namespace SnackMachine.Tests
         [Fact]
         public void Inserted_money_goes_to_money_in_transaction()
         {
-            var snackMachine = new Logic.SnackMachine();
+            var snackMachine = new Logic.SnackMachines.SnackMachine();
             snackMachine.InsertMoney(Cent);
             snackMachine.InsertMoney(Dollar);
 
@@ -33,7 +34,7 @@ namespace SnackMachine.Tests
         [Fact]
         public void Cannot_insert_more_than_one_coint_or_note_at_a_time()
         {
-            var snackMachine = new Logic.SnackMachine();
+            var snackMachine = new Logic.SnackMachines.SnackMachine();
             var twoCent = Cent + Cent;
             Action action = () =>
             {
@@ -46,7 +47,7 @@ namespace SnackMachine.Tests
         [Fact]
         public void BuySnack_trades_inserted_money_for_a_snack()
         {
-            var snackMachine = new Logic.SnackMachine();
+            var snackMachine = new Logic.SnackMachines.SnackMachine();
             snackMachine.LoadSnacks(1, new SnackPile(Chocolate, 1m, 10));
             snackMachine.InsertMoney(Dollar);
             snackMachine.InsertMoney(Dollar);
@@ -61,7 +62,7 @@ namespace SnackMachine.Tests
         [Fact]
         public void Cannot_make_purchase_when_there_is_no_snacks()
         {
-            var snackMachine = new Logic.SnackMachine();
+            var snackMachine = new Logic.SnackMachines.SnackMachine();
             snackMachine.InsertMoney(Dollar);
 
             Action action = () => snackMachine.BuySnack(1);
@@ -72,7 +73,7 @@ namespace SnackMachine.Tests
         [Fact]
         public void Cannot_make_purchase_if_not_enought_money_inserted()
         {
-            var snackMachine = new Logic.SnackMachine();
+            var snackMachine = new Logic.SnackMachines.SnackMachine();
             snackMachine.LoadSnacks(1, new SnackPile(Chocolate, 2m, 10));
             snackMachine.InsertMoney(Dollar);
 
@@ -84,7 +85,7 @@ namespace SnackMachine.Tests
         [Fact]
         public void Snack_machine_returns_money_with_highest_denomination_first()
         {
-            var snackMachine = new Logic.SnackMachine();
+            var snackMachine = new Logic.SnackMachines.SnackMachine();
             snackMachine.LoadMoney(Dollar);
 
             snackMachine.InsertMoney(Quarter);
@@ -99,7 +100,7 @@ namespace SnackMachine.Tests
         [Fact]
         public void After_purchase_change_is_returned()
         {
-            var snackMachine = new Logic.SnackMachine();
+            var snackMachine = new Logic.SnackMachines.SnackMachine();
 
             snackMachine.LoadSnacks(1, new SnackPile(Chocolate, 0.5m, 10));
             snackMachine.LoadMoney(TenCent * 10);
@@ -113,7 +114,7 @@ namespace SnackMachine.Tests
         [Fact]
         public void Cannot_buy_snack_if_not_enough_change()
         {
-            var snackMachine = new Logic.SnackMachine();
+            var snackMachine = new Logic.SnackMachines.SnackMachine();
 
             snackMachine.LoadSnacks(1, new SnackPile(Chocolate, 0.5m, 10));
 

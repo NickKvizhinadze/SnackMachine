@@ -1,5 +1,4 @@
-﻿using NHibernate;
-using SnackMachine.Logic;
+﻿using SnackMachine.Logic.SnackMachines;
 
 namespace SnackMachine.UI.Common
 {
@@ -7,7 +6,7 @@ namespace SnackMachine.UI.Common
     {
         public MainViewModel()
         {
-            Logic.SnackMachine snackMachine = new SnackMachineRepository().GetById(1);
+            Logic.SnackMachines.SnackMachine snackMachine = new SnackMachineRepository().GetById(1);
             var viewModel = new SnackMachineViewModel(snackMachine);
             _dialogService.ShowDialog(viewModel);
         }

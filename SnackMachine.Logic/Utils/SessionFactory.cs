@@ -7,7 +7,7 @@ using FluentNHibernate.Conventions.Helpers;
 using FluentNHibernate.Conventions.Instances;
 using FluentNHibernate.Conventions.AcceptanceCriteria;
 
-namespace SnackMachine.Logic
+namespace SnackMachine.Logic.Utils
 {
     public class SessionFactory
     {

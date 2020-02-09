@@ -1,4 +1,4 @@
-﻿namespace SnackMachine.Logic
+﻿namespace SnackMachine.Logic.Common
 {
     public class AggregateRoot : Entity
     {        
