@@ -1,4 +1,5 @@
-﻿using SnackMachine.Logic.SnackMachines;
+﻿using SnackMachine.UI.SnackMachines;
+using SnackMachine.Logic.SnackMachines;
 
 namespace SnackMachine.UI.Common
 {

@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using SnackMachine.UI.Common;
-using SnackMachine.Logic.Common;
 using SnackMachine.Logic.SharedKernel;
 using SnackMachine.Logic.SnackMachines;
 
-namespace SnackMachine.UI
+namespace SnackMachine.UI.SnackMachines
 {
     public class SnackMachineViewModel : ViewModel
     {
