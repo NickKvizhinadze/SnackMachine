@@ -9,6 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnackMachine.Tests", "Snack
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnackMachine.UI", "SnackMachine.UI\SnackMachine.UI.csproj", "{152E8D7B-22D9-4532-8FA8-16D339FB5649}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{DE704C57-66C2-492E-B431-72D06747F850}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Db", "Db", "{EEE01CBA-6F6B-4AE3-AC08-059998B4D762}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\SnackMachineDbInit.bak = ..\..\..\SnackMachineDbInit.bak
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +37,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EEE01CBA-6F6B-4AE3-AC08-059998B4D762} = {DE704C57-66C2-492E-B431-72D06747F850}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A47EC662-1B78-4921-92D7-163A722E7E9F}
