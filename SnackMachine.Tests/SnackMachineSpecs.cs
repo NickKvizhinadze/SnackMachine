@@ -1,9 +1,9 @@
 ﻿using System;
 using Xunit;
 using FluentAssertions;
-using static SnackMachine.Logic.Money;
-using System.Linq;
 using SnackMachine.Logic;
+using static SnackMachine.Logic.Money;
+using static SnackMachine.Logic.Snack;
 
 namespace SnackMachine.Tests
 {
@@ -47,7 +47,7 @@ namespace SnackMachine.Tests
         public void BuySnack_trades_inserted_money_for_a_snack()
         {
             var snackMachine = new Logic.SnackMachine();
-            snackMachine.LoadSnacks(1, new SnackPile(new Snack("Some snack"), 1m, 10));
+            snackMachine.LoadSnacks(1, new SnackPile(Chocolate, 1m, 10));
             snackMachine.InsertMoney(Dollar);
             snackMachine.InsertMoney(Dollar);
 
@@ -73,7 +73,7 @@ namespace SnackMachine.Tests
         public void Cannot_make_purchase_if_not_enought_money_inserted()
         {
             var snackMachine = new Logic.SnackMachine();
-            snackMachine.LoadSnacks(1, new SnackPile(new Snack("Some snack"), 2m, 10));
+            snackMachine.LoadSnacks(1, new SnackPile(Chocolate, 2m, 10));
             snackMachine.InsertMoney(Dollar);
 
             Action action = () => snackMachine.BuySnack(1);
@@ -101,7 +101,7 @@ namespace SnackMachine.Tests
         {
             var snackMachine = new Logic.SnackMachine();
 
-            snackMachine.LoadSnacks(1, new SnackPile(new Snack("Some snack"), 0.5m, 10));
+            snackMachine.LoadSnacks(1, new SnackPile(Chocolate, 0.5m, 10));
             snackMachine.LoadMoney(TenCent * 10);
             snackMachine.InsertMoney(Dollar);
             snackMachine.BuySnack(1);
@@ -115,7 +115,7 @@ namespace SnackMachine.Tests
         {
             var snackMachine = new Logic.SnackMachine();
 
-            snackMachine.LoadSnacks(1, new SnackPile(new Snack("Some snack"), 0.5m, 10));
+            snackMachine.LoadSnacks(1, new SnackPile(Chocolate, 0.5m, 10));
 
             snackMachine.InsertMoney(Dollar);
 

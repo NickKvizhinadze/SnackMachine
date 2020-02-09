@@ -11,7 +11,7 @@
         {
             SnackMachine = snackMachine;
             Position = position;
-            SnackPile = new SnackPile(null, 0m, 0);
+            SnackPile = SnackPile.Empty;
         }
 
         #endregion

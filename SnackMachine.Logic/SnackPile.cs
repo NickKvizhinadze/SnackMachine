@@ -8,6 +8,10 @@ namespace SnackMachine.Logic
 {
     public class SnackPile : ValueObject<SnackPile>
     {
+        #region Static Fields
+        public static SnackPile Empty = new SnackPile(Snack.None, 0m, 0);
+        #endregion
+
         #region Constructor
         public SnackPile()
         {
