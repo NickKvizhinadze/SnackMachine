@@ -17,7 +17,7 @@
         #endregion
 
         #region Properties
-        public SnackPile SnackPile { get; set; }
+        public virtual SnackPile SnackPile { get; set; }
         public virtual SnackMachine SnackMachine { get; protected set; }
         public virtual int Position { get; protected set; }
         #endregion

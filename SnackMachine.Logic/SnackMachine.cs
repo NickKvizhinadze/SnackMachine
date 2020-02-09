@@ -27,12 +27,12 @@ namespace SnackMachine.Logic
 
         public virtual Money MoneyInside { get; protected set; }
         public virtual decimal MoneyInTransaction { get; protected set; }
-        protected IList<Slot> Slots { get; set; }
+        protected virtual IList<Slot> Slots { get; }
 
         #endregion
 
         #region Methods
-        public void LoadMoney(Money money)
+        public virtual void LoadMoney(Money money)
         {
             MoneyInside += money;
         }
@@ -64,16 +64,15 @@ namespace SnackMachine.Logic
         public virtual void BuySnack(int position)
         {
             Slot slot = GetSlot(position);
-            var snackPile = slot.SnackPile;
 
-            if (snackPile.Price > MoneyInTransaction)
+            if (slot.SnackPile.Price > MoneyInTransaction)
                 throw new InvalidOperationException();
 
-            snackPile = snackPile.SubstractOne();
+            slot.SnackPile = slot.SnackPile.SubstractOne();
 
-            var change = MoneyInside.Allocate(MoneyInTransaction - snackPile.Price);
+            var change = MoneyInside.Allocate(MoneyInTransaction - slot.SnackPile.Price);
 
-            if (change.Amount < MoneyInTransaction - snackPile.Price)
+            if (change.Amount < MoneyInTransaction - slot.SnackPile.Price)
                 throw new InvalidOperationException();
             MoneyInside -= change;
             MoneyInTransaction = 0; //TODO: insetd of this should Return Money

@@ -54,7 +54,7 @@ namespace SnackMachine.Tests
             snackMachine.BuySnack(1);
 
             snackMachine.MoneyInTransaction.Should().Be(0);
-            snackMachine.MoneyInside.Amount.Should().Be(2m);
+            snackMachine.MoneyInside.Amount.Should().Be(1m);
             snackMachine.GetSnackPile(1).Quantity.Should().Be(9);
         }
 
