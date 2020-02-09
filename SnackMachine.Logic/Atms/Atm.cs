@@ -17,7 +17,7 @@ namespace SnackMachine.Logic.Atms
         #endregion
 
         #region Methods
-        public void LoadMoney(Money money)
+        public virtual void LoadMoney(Money money)
         {
             MoneyInside += money;
         }
@@ -50,7 +50,7 @@ namespace SnackMachine.Logic.Atms
         #endregion
 
         #region Private Methods
-        public decimal CalculateAmountWithCommision(decimal amount)
+        public virtual decimal CalculateAmountWithCommision(decimal amount)
         {
             decimal commission = amount * CommissionRate;
             decimal lessThanCent = commission % 0.01m;
