@@ -72,6 +72,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\ViewModel.cs" />
+    <Compile Include="SnackPileViewModel.cs" />
     <Compile Include="Utils\DialogService.cs" />
     <Compile Include="SnackMachineViewModel.cs" />
     <Page Include="Common\CustomWindow.xaml">

@@ -1,6 +1,8 @@
 ﻿using NHibernate;
 using SnackMachine.Logic;
 using SnackMachine.UI.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SnackMachine.UI
 {
@@ -8,6 +10,7 @@ namespace SnackMachine.UI
     {
         #region Fields
         private readonly Logic.SnackMachine _snackMachine;
+        private readonly SnackMachineRepository _repository;
 
         private string _message = "";
         #endregion
@@ -17,6 +20,7 @@ namespace SnackMachine.UI
         public SnackMachineViewModel(Logic.SnackMachine snackMachine)
         {
             _snackMachine = snackMachine;
+            _repository = new SnackMachineRepository();
             InsertCentCommand = new Command(() => InsertMoney(Money.Cent));
             InsertTenCentCommand = new Command(() => InsertMoney(Money.TenCent));
             InsertQuarterCommand = new Command(() => InsertMoney(Money.Quarter));
@@ -24,7 +28,7 @@ namespace SnackMachine.UI
             InsertFiveDollarCommand = new Command(() => InsertMoney(Money.FiveDollar));
             InsertTwentyDollarCommand = new Command(() => InsertMoney(Money.TwentyDollar));
             ReturnMoneyCommand = new Command(() => ReturnMoney());
-            BuySnackCommand = new Command(() => BuySnack());
+            BuySnackCommand = new Command<string>(BuySnack);
         }
 
         #endregion
@@ -34,6 +38,11 @@ namespace SnackMachine.UI
 
         public string MoneyInTransaction => _snackMachine.MoneyInTransaction.ToString();
         public Money MoneyInside => _snackMachine.MoneyInside;
+
+        public IReadOnlyList<SnackPileViewModel> Piles => _snackMachine
+                                                            .GetAllSnackPiles()
+                                                            .Select(s => new SnackPileViewModel(s))
+                                                            .ToList();
 
         public string Message
         {
@@ -56,7 +65,7 @@ namespace SnackMachine.UI
         public Command InsertFiveDollarCommand { get; private set; }
         public Command InsertTwentyDollarCommand { get; private set; }
         public Command ReturnMoneyCommand { get; private set; }
-        public Command BuySnackCommand { get; private set; }
+        public Command<string> BuySnackCommand { get; private set; }
 
         #endregion
 
@@ -74,15 +83,19 @@ namespace SnackMachine.UI
             NotifyClient("Money was returned");
         }
 
-        private void BuySnack()
+        private void BuySnack(string positionString)
         {
-            _snackMachine.BuySnack(1);
-            using (ISession session = SessionFactory.OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
+            int position = int.Parse(positionString);
+
+            string error = _snackMachine.CanBuySnack(position);
+            if(error != string.Empty)
             {
-                session.SaveOrUpdate(_snackMachine);
-                transaction.Commit();
+                NotifyClient(error);
+                return;
             }
+
+            _snackMachine.BuySnack(position);
+            _repository.Save(_snackMachine);
             NotifyClient("You have bought a snack");
         }
 
@@ -91,9 +104,10 @@ namespace SnackMachine.UI
         #region Private Methods
         private void NotifyClient(string message)
         {
+            Message = message;
             Notify(nameof(MoneyInTransaction));
             Notify(nameof(MoneyInside));
-            Message = message;
+            Notify(nameof(Piles));
         }
         #endregion
     }

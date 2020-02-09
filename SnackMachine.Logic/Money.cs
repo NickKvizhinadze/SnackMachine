@@ -68,33 +68,18 @@ namespace SnackMachine.Logic
         #endregion
 
         #region Methods
+        public bool CanAllocate(decimal amount)
+        {
+            var money = AllocateCore(amount);
+            return money.Amount == amount;
+        }
+
         public Money Allocate(decimal amount)
         {
-            int twentyDollarCount = Math.Min((int)(amount / 20), TwentyDollarCount);
-            amount -= (twentyDollarCount * 20);
-
-            int fiveDollarCount = Math.Min((int)(amount / 5), FiveDollarCount);
-            amount -= fiveDollarCount * 5;
-
-            int oneDollarCount = Math.Min((int)amount, OneDollarCount);
-            amount -= oneDollarCount;
-
-            int quarterCount = Math.Min((int)(amount / 0.25m), QuarterCount);
-            amount -= quarterCount * 0.25m;
-
-            int tenCentCount = Math.Min((int)(amount / 0.1m), TenCentCount);
-            amount -= tenCentCount * 0.1m;
-
-            int oneCentCount = Math.Min((int)(amount / 0.01m), OneCentCount);
-
-            return new Money(
-                oneCentCount,
-                tenCentCount,
-                quarterCount,
-                oneDollarCount,
-                fiveDollarCount,
-                twentyDollarCount
-                );
+            if (!CanAllocate(amount))
+                throw new InvalidOperationException();
+            
+            return AllocateCore(amount);
         }
 
         public static Money operator +(Money money1, Money money2)
@@ -170,6 +155,35 @@ namespace SnackMachine.Logic
                 hashCode = (hashCode * 397) ^ TwentyDollarCount;
                 return hashCode;
             }
+        }
+
+        private Money AllocateCore(decimal amount)
+        {
+            int twentyDollarCount = Math.Min((int)(amount / 20), TwentyDollarCount);
+            amount -= (twentyDollarCount * 20);
+
+            int fiveDollarCount = Math.Min((int)(amount / 5), FiveDollarCount);
+            amount -= fiveDollarCount * 5;
+
+            int oneDollarCount = Math.Min((int)amount, OneDollarCount);
+            amount -= oneDollarCount;
+
+            int quarterCount = Math.Min((int)(amount / 0.25m), QuarterCount);
+            amount -= quarterCount * 0.25m;
+
+            int tenCentCount = Math.Min((int)(amount / 0.1m), TenCentCount);
+            amount -= tenCentCount * 0.1m;
+
+            int oneCentCount = Math.Min((int)(amount / 0.01m), OneCentCount);
+
+            return new Money(
+                oneCentCount,
+                tenCentCount,
+                quarterCount,
+                oneDollarCount,
+                fiveDollarCount,
+                twentyDollarCount
+                );
         }
 
         #endregion

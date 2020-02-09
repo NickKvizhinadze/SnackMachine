@@ -7,11 +7,7 @@ namespace SnackMachine.UI.Common
     {
         public MainViewModel()
         {
-            Logic.SnackMachine snackMachine;
-            using(ISession session = SessionFactory.OpenSession())
-            {
-                snackMachine = session.Get<Logic.SnackMachine>(1L);
-            }
+            Logic.SnackMachine snackMachine = new SnackMachineRepository().GetById(1);
             var viewModel = new SnackMachineViewModel(snackMachine);
             _dialogService.ShowDialog(viewModel);
         }

@@ -60,20 +60,33 @@ namespace SnackMachine.Logic
             MoneyInTransaction = 0;
             MoneyInside -= allocatedMoney;
         }
+        
+        public virtual string CanBuySnack(int position)
+        {
+            var snackPile = GetSnackPile(position);
+
+            if (snackPile.Quantity == 0)
+                return "The snack pile is empty";
+
+            if (MoneyInTransaction < snackPile.Price)
+                return "Not enought money";
+
+            if (!MoneyInside.CanAllocate(MoneyInTransaction - snackPile.Price))
+                return "Not enough change";
+
+            return string.Empty;
+        }
 
         public virtual void BuySnack(int position)
         {
+            if (CanBuySnack(position) != string.Empty)
+                throw new InvalidOperationException();
+
             Slot slot = GetSlot(position);
 
-            if (slot.SnackPile.Price > MoneyInTransaction)
-                throw new InvalidOperationException();
-
             slot.SnackPile = slot.SnackPile.SubstractOne();
-
             var change = MoneyInside.Allocate(MoneyInTransaction - slot.SnackPile.Price);
 
-            if (change.Amount < MoneyInTransaction - slot.SnackPile.Price)
-                throw new InvalidOperationException();
             MoneyInside -= change;
             MoneyInTransaction = 0; //TODO: insetd of this should Return Money
         }
@@ -81,6 +94,14 @@ namespace SnackMachine.Logic
         public virtual SnackPile GetSnackPile(int position)
         {
             return GetSlot(position).SnackPile;
+        }
+
+        public virtual IReadOnlyList<SnackPile> GetAllSnackPiles()
+        {
+            return Slots
+                    .OrderBy(s => s.Position)
+                    .Select(s => s.SnackPile)
+                    .ToList();
         }
         #endregion
 
