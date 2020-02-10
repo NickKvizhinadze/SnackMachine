@@ -6,6 +6,7 @@ using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Helpers;
 using FluentNHibernate.Conventions.Instances;
 using FluentNHibernate.Conventions.AcceptanceCriteria;
+using NHibernate.Event;
 
 namespace SnackMachine.Logic.Utils
 {
@@ -40,14 +41,25 @@ namespace SnackMachine.Logic.Utils
                         .When(criteria => criteria.Expect(x => x.Nullable, Is.Not.Set), x => x.Not.Nullable()))
                     .Conventions.Add<TableNameConvention>()
                     .Conventions.Add<HiloConvention>()
-                );
+                )
+                .ExposeConfiguration(x =>
+                {
+                    x.EventListeners.PostCommitUpdateEventListeners =
+                        new IPostUpdateEventListener[] { new EventListener() };
+                    x.EventListeners.PostCommitInsertEventListeners =
+                        new IPostInsertEventListener[] { new EventListener() };
+                    x.EventListeners.PostCommitDeleteEventListeners = 
+                        new IPostDeleteEventListener[] { new EventListener() };
+                    x.EventListeners.PostCollectionUpdateEventListeners =
+                        new IPostCollectionUpdateEventListener[] { new EventListener() };
+                });
 
             return configuration.BuildSessionFactory();
         }
         #endregion
 
         #region Classes
-        public class TableNameConvention: IClassConvention
+        public class TableNameConvention : IClassConvention
         {
             public void Apply(IClassInstance instance)
             {
@@ -62,7 +74,7 @@ namespace SnackMachine.Logic.Utils
                 instance.Column(instance.EntityType.Name + "ID");
                 instance.GeneratedBy.HiLo("[dbo][Ids]", "NextHigh", "9", "EntityName = '" + instance.EntityType.Name + "'");
             }
-        }  
+        }
         #endregion
     }
 }

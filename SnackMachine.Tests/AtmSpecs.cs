@@ -1,6 +1,8 @@
 ﻿using Xunit;
-using SnackMachine.Logic.Atms;
 using FluentAssertions;
+using SnackMachine.Logic.Atms;
+using SnackMachine.Logic.Utils;
+using SnackMachine.Logic.Common;
 using static SnackMachine.Logic.SharedKernel.Money;
 
 namespace SnackMachine.Tests
@@ -38,6 +40,20 @@ namespace SnackMachine.Tests
 
             atm.MoneyInside.Amount.Should().Be(0m);
             atm.MoneyCharged.Should().Be(1.12m);
+        }
+    
+        [Fact]
+        public void Take_money_raises_an_event()
+        {
+            var atm = new Atm();
+            atm.LoadMoney(Dollar);
+
+            atm.TakeMoney(1m);
+
+            var balanceChangedEvent = atm.DomainEvents[0] as BalanceChangedEvent;
+
+            balanceChangedEvent.Should().NotBeNull();
+            balanceChangedEvent.Delta.Should().Be(1.01m);
         }
     }
 }

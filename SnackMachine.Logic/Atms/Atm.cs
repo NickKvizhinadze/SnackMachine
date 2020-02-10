@@ -46,6 +46,7 @@ namespace SnackMachine.Logic.Atms
             decimal amountWithCommision = CalculateAmountWithCommision(amount);
 
             MoneyCharged += amountWithCommision;
+            AddDomainEvent(new BalanceChangedEvent(amountWithCommision));
         }
         #endregion
 

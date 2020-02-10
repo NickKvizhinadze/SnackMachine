@@ -1,4 +1,5 @@
-﻿using SnackMachine.Logic.Management;
+﻿using SnackMachine.Logic.Common;
+using SnackMachine.Logic.Management;
 
 namespace SnackMachine.Logic.Utils
 {
@@ -8,6 +9,7 @@ namespace SnackMachine.Logic.Utils
         {
             SessionFactory.Init(connectionString);
             HeadOfficeInstance.Init();
+            DomainEvents.Init();
         }        
     }
 }
