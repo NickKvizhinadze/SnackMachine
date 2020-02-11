@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Atms\Atm.cs" />
+    <Compile Include="Atms\AtmDto.cs" />
     <Compile Include="Atms\AtmMap.cs" />
     <Compile Include="Atms\AtmRepository.cs" />
     <Compile Include="Atms\BalanceChangedEvent.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Management\HeadOfficeInstance.cs" />
     <Compile Include="Management\HeadOfficeMap.cs" />
     <Compile Include="Management\HeadOfficeRepository.cs" />
+    <Compile Include="SnackMachines\SnackMachineDto.cs" />
     <Compile Include="Utils\EventListener.cs" />
     <Compile Include="Utils\Initer.cs" />
     <Compile Include="SharedKernel\Money.cs" />

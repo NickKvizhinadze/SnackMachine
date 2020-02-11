@@ -1,21 +1,14 @@
-﻿using SnackMachine.UI.SnackMachines;
-using SnackMachine.Logic.SnackMachines;
-using SnackMachine.UI.Atms;
-using SnackMachine.Logic.Atms;
+﻿using SnackMachine.UI.Management;
 
 namespace SnackMachine.UI.Common
 {
     public class MainViewModel : ViewModel
     {
+        public DashboardViewModel Dashboard { get; private set; }
+
         public MainViewModel()
         {
-            //Logic.SnackMachines.SnackMachine snackMachine = new SnackMachineRepository().GetById(1);
-            //var viewModel = new SnackMachineViewModel(snackMachine);
-            
-            Atm atm = new AtmRepository().GetById(1);
-            var viewModel = new AtmViewModel(atm);
-            
-            _dialogService.ShowDialog(viewModel);
+            Dashboard = new DashboardViewModel();
         }
     }
 }

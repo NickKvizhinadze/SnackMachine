@@ -39,6 +39,9 @@ namespace SnackMachine.Logic.Utils
 
         private void DispatchEvents(AggregateRoot aggregateRoot)
         {
+            if (aggregateRoot == null)
+                return;
+
             foreach (IDomainEvent domainEvent in aggregateRoot.DomainEvents)
                 DomainEvents.Dispatch(domainEvent);
 
